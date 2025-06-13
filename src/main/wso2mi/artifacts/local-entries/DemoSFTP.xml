@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="DemoSFTP" xmlns="http://ws.apache.org/ns/synapse">
+  <file.init>
+    <connectionType>SFTP</connectionType>
+    <host>test.rebex.net</host>
+    <port>22</port>
+    <username>demo</username>
+    <password>password</password>
+    <encodePassword>false</encodePassword>
+    <userDirIsRoot>true</userDirIsRoot>
+    <setAvoidPermission>false</setAvoidPermission>
+    <strictHostKeyChecking>false</strictHostKeyChecking>
+    <sftpConnectionTimeout>100000</sftpConnectionTimeout>
+    <sftpSessionTimeout>150000</sftpSessionTimeout>
+    <fileLockScheme>Local</fileLockScheme>
+    <name>DemoSFTP</name>
+  </file.init>
+</localEntry>

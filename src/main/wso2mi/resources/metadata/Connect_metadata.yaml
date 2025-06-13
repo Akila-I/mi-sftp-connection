@@ -1,0 +1,10 @@
+---
+key: "Connect-1.0.0"
+name : "Connect"
+displayName : "Connect"
+description: "Connect"
+version: "1.0.0"
+serviceUrl: "https://{MI_HOST}:{MI_PORT}/connect"
+definitionType: "OAS3"
+securityType: "BASIC"
+mutualSSLEnabled: false
