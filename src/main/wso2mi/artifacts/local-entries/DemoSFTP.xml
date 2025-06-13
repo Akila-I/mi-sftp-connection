@@ -2,10 +2,10 @@
 <localEntry key="DemoSFTP" xmlns="http://ws.apache.org/ns/synapse">
   <file.init>
     <connectionType>SFTP</connectionType>
-    <host>test.rebex.net</host>
-    <port>22</port>
-    <username>demo</username>
-    <password>password</password>
+    <host>{$ctx:sftpHost}</host>
+    <port>{$ctx:sftpPort}</port>
+    <username>{$ctx:sftpUsername}</username>
+    <password>{$ctx:sftpPassword}</password>
     <encodePassword>false</encodePassword>
     <userDirIsRoot>true</userDirIsRoot>
     <setAvoidPermission>false</setAvoidPermission>

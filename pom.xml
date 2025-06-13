@@ -404,10 +404,11 @@
     <maven.test.skip>false</maven.test.skip>
   </properties>
   <dependencies>
+    
     <dependency>
       <groupId>org.wso2.integration.connector</groupId>
       <artifactId>mi-connector-file</artifactId>
-      <version>4.0.40</version>
+      <version>4.0.33</version>
       <type>zip</type>
       <exclusions>
         <exclusion>

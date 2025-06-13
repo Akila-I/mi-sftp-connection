@@ -2,16 +2,19 @@
 <api context="/connect" name="Connect" xmlns="http://ws.apache.org/ns/synapse">
   <resource methods="GET" uri-template="/">
     <inSequence>
-    <file.listFiles configKey="DemoSFTP">
-    <directoryPath >/</directoryPath>
-    <matchingPattern >txt</matchingPattern>
-    <recursive >true</recursive>
-    <responseFormat >Hierarchical</responseFormat>
-    <sortingAttribute >Name</sortingAttribute>
-    <sortingOrder >Ascending</sortingOrder>
-    <maxRetries >10</maxRetries>
-    <retryDelay >1000</retryDelay>
-    <diskShareAccessMask >MAXIMUM_ALLOWED</diskShareAccessMask>
+      <property expression="get-property('env', 'SFTP_HOST')" name="sftpHost" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PORT')" name="sftpPort" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_USERNAME')" name="sftpUsername" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PASSWORD')" name="sftpPassword" scope="default" type="STRING"/>
+      <file.listFiles configKey="DemoSFTP">
+      <directoryPath >/</directoryPath>
+      <matchingPattern >txt</matchingPattern>
+      <recursive >true</recursive>
+      <responseFormat >Hierarchical</responseFormat>
+      <sortingAttribute >Name</sortingAttribute>
+      <sortingOrder >Ascending</sortingOrder>
+      <maxRetries >10</maxRetries>
+      <retryDelay >1000</retryDelay>
       </file.listFiles>
       <log category="INFO" level="simple">
         <property name="AfterListFiles" value="SFTP files listed"/>
