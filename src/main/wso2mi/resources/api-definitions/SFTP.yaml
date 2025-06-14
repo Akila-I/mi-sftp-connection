@@ -1,0 +1,60 @@
+openapi: 3.0.1
+info:
+  title: SFTP
+  description: API Definition of SFTP
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/sftp
+paths:
+  /readFile:
+    get:
+      parameters:
+      - name: fileName
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /listFiles:
+    get:
+      parameters:
+      - name: directory
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /writeFile:
+    get:
+      parameters:
+      - name: filePath
+        in: query
+        schema:
+          type: string
+      - name: fileContent
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response
+  /renameFile:
+    get:
+      parameters:
+      - name: oldFileName
+        in: query
+        schema:
+          type: string
+      - name: newFileName
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          description: Default response

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api name="SFTP" context="/sftp" xmlns="http://ws.apache.org/ns/synapse">
+  <resource methods="GET" uri-template="/readFile?fileName={fileName}">
+    <inSequence>
+      <property expression="get-property('env', 'SFTP_HOST')" name="sftpHost" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PORT')" name="sftpPort" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_USERNAME')" name="sftpUsername" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PASSWORD')" name="sftpPassword" scope="default" type="STRING"/>
+      <property name="fileName" expression="get-property('uri.var.fileName')" scope="default" type="STRING"/>
+      <log category="INFO" level="simple">
+        <property name="fileName" expression="$ctx:fileName"/>
+        <property name="startReadFileContentIntoProperty" value="Start reading file content into property"/>
+      </log>
+      <file.read configKey="DemoSFTP">
+        <path>{$ctx:fileName}</path>
+        <filePattern></filePattern>
+        <readMode>Complete File</readMode>
+        <contentType></contentType>
+        <encoding>UTF-8</encoding>
+        <includeResultTo>Message Property</includeResultTo>
+        <resultPropertyName>sftpReadFileContent</resultPropertyName>
+        <enableStreaming>false</enableStreaming>
+        <enableLock>false</enableLock>
+        <maxRetries>0</maxRetries>
+        <retryDelay>0</retryDelay>
+      </file.read>
+      <log category="INFO" level="simple">
+        <property name="endReadFileContentIntoProperty" value="End reading file content into property"/>
+        <property name="LogReadFileContentFromProperty" expression="$ctx:sftpReadFileContent"/>
+      </log>
+      <respond/>
+    </inSequence>
+    <faultSequence>
+    </faultSequence>
+  </resource>
+  <resource methods="GET" uri-template="/listFiles?directory={directory}&amp;type={type}">
+    <inSequence>
+      <property expression="get-property('env', 'SFTP_HOST')" name="sftpHost" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PORT')" name="sftpPort" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_USERNAME')" name="sftpUsername" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PASSWORD')" name="sftpPassword" scope="default" type="STRING"/>
+      <property name="directory" expression="get-property('uri.var.directory')" scope="default" type="STRING"/>
+      <property name="type" expression="get-property('uri.var.type')" scope="default" type="STRING"/>
+      <log category="INFO" level="simple">
+        <property name="directory" expression="$ctx:directory"/>
+        <property name="type" expression="$ctx:type"/>
+        <property name="startListFiles" value="Start listing files"/>
+      </log>
+      <file.listFiles configKey="DemoSFTP">
+        <directoryPath>{$ctx:directory}</directoryPath>
+        <matchingPattern>{$ctx:type}</matchingPattern>
+        <recursive>true</recursive>
+        <responseFormat>Hierarchical</responseFormat>
+        <sortingAttribute>Name</sortingAttribute>
+        <sortingOrder>Ascending</sortingOrder>
+        <maxRetries>10</maxRetries>
+        <retryDelay>1000</retryDelay>
+      </file.listFiles>
+      <log category="INFO" level="simple">
+        <property name="AfterListFiles" value="SFTP files listed"/>
+      </log>
+      <respond/>
+    </inSequence>
+    <faultSequence>
+    </faultSequence>
+  </resource>
+  <resource methods="GET" uri-template="/writeFile?filePath={filePath}&amp;fileContent={fileContent}">
+    <inSequence>
+      <property expression="get-property('env', 'SFTP_HOST')" name="sftpHost" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PORT')" name="sftpPort" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_USERNAME')" name="sftpUsername" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PASSWORD')" name="sftpPassword" scope="default" type="STRING"/>
+      <property name="filePath" expression="get-property('uri.var.filePath')" scope="default" type="STRING"/>
+      <property name="fileContent" expression="get-property('uri.var.fileContent')" scope="default" type="STRING"/>
+      <file.write configKey="DemoSFTP">
+        <filePath>{$ctx:filePath}</filePath>
+        <contentOrExpression>'{$ctx:fileContent}'</contentOrExpression>
+        <encoding>UTF-8</encoding>
+        <mimeType>Automatic</mimeType>
+        <compress>false</compress>
+        <writeMode>Create New</writeMode>
+        <enableStreaming>false</enableStreaming>
+        <appendNewLine>false</appendNewLine>
+        <enableLock>false</enableLock>
+        <includeResultTo>Message Body</includeResultTo>
+        <updateLastModified>true</updateLastModified>
+        <maxRetries>0</maxRetries>
+        <retryDelay>0</retryDelay>
+      </file.write>
+      <respond/>
+    </inSequence>
+    <faultSequence>
+    </faultSequence>
+  </resource>
+  <resource methods="GET" uri-template="/renameFile?oldFileName={oldFileName}&amp;newFileName={newFileName}">
+    <inSequence>
+      <property expression="get-property('env', 'SFTP_HOST')" name="sftpHost" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PORT')" name="sftpPort" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_USERNAME')" name="sftpUsername" scope="default" type="STRING"/>
+      <property expression="get-property('env', 'SFTP_PASSWORD')" name="sftpPassword" scope="default" type="STRING"/>
+      <property name="oldFileName" expression="get-property('uri.var.oldFileName')" scope="default" type="STRING"/>
+      <property name="newFileName" expression="get-property('uri.var.newFileName')" scope="default" type="STRING"/>
+      <file.rename configKey="DemoSFTP">
+        <path>{$ctx:oldFileName}</path>
+        <renameTo>{$ctx:newFileName}</renameTo>
+        <overwrite>false</overwrite>
+      </file.rename>
+      <respond/>
+    </inSequence>
+    <faultSequence>
+    </faultSequence>
+  </resource>
+</api>
