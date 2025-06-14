@@ -42,4 +42,8 @@ buildNumber.properties
 ## Miscellaneous
 ##############################
 *.log
-		
+
+##############################
+## Environment Variables
+##############################
+.env
